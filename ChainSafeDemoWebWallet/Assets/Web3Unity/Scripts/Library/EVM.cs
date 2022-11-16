@@ -7,6 +7,7 @@ using Models;
 using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
+using ChickenConfig = ChickenDemoConfig.Config;
 
 public class EVM
 {
@@ -18,7 +19,7 @@ public class EVM
     public static async Task<string> BalanceOf(string _chain, string _network, string _account, string _rpc = "")
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("account", _account);
@@ -35,7 +36,7 @@ public class EVM
     public static async Task<string> Verify(string _message, string _signature)
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("message", _message);
         form.AddField("signature", _signature);
         string url = host + "/verify";
@@ -50,7 +51,7 @@ public class EVM
     public static async Task<string> Call(string _chain, string _network, string _contract, string _abi, string _method, string _args, string _rpc = "")
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("contract", _contract);
@@ -70,7 +71,7 @@ public class EVM
     public static async Task<string> MultiCall(string _chain, string _network, string _contract, string _abi, string _method, string _args, string _multicall = "", string _rpc = "")
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("contract", _contract);
@@ -91,7 +92,7 @@ public class EVM
     public static async Task<string> TxStatus(string _chain, string _network, string _transaction, string _rpc = "")
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("transaction", _transaction);
@@ -114,7 +115,7 @@ public class EVM
         Debug.Log("CID: " + _cid);
         Debug.Log("Type: " + _type);
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("account", _account);
@@ -134,7 +135,7 @@ public class EVM
 public static async Task<List<GetNftListModel.Response>> GetNftMarket(string _chain, string _network)
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         string url = host + "/getListedNfts";
@@ -149,7 +150,7 @@ public static async Task<List<GetNftListModel.Response>> GetNftMarket(string _ch
 public static async Task<List<MintedNFT.Response>> GetMintedNFT(string _chain, string _network, string _account)
 {
     WWWForm form = new WWWForm();
-    form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+    form.AddField("projectId", ChickenConfig.ProjectID);
     form.AddField("chain", _chain);
     form.AddField("network", _network);
     form.AddField("account", _account);
@@ -165,7 +166,7 @@ public static async Task<List<MintedNFT.Response>> GetMintedNFT(string _chain, s
     public static async Task<BuyNFT.Response> CreatePurchaseNftTransaction(string _chain, string _network, string _account, string _itemId, string _price, string _tokenType)
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("account", _account);
@@ -193,7 +194,7 @@ public static async Task<List<MintedNFT.Response>> GetMintedNFT(string _chain, s
     public static async Task<ListNFT.Response> CreateListNftTransaction(string _chain, string _network, string _account, string _tokenId, string _priceHex, string _tokenType)
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("account", _account);
@@ -216,7 +217,7 @@ public static async Task<List<MintedNFT.Response>> GetMintedNFT(string _chain, s
     public static async Task<List<GetNftListModel.Response>> CreateCancelNftTransaction(string _chain, string _network, string _account, string _itemId)
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("account", _account);
@@ -259,7 +260,7 @@ public static async Task<List<MintedNFT.Response>> GetMintedNFT(string _chain, s
     public static async Task<CreateApprovalModel.Response> CreateApproveTransaction(string _chain, string _network, string _account, string _tokenType)
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("account", _account);
@@ -277,7 +278,7 @@ public static async Task<List<MintedNFT.Response>> GetMintedNFT(string _chain, s
     public static async Task<int> BlockNumber(string _chain, string _network, string _rpc = "")
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("rpc", _rpc);
@@ -293,7 +294,7 @@ public static async Task<List<MintedNFT.Response>> GetMintedNFT(string _chain, s
     public static async Task<string> Nonce(string _chain, string _network, string _account, string _rpc = "")
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("account", _account);
@@ -310,7 +311,7 @@ public static async Task<List<MintedNFT.Response>> GetMintedNFT(string _chain, s
     public static async Task<string> CreateContractData(string _abi, string _method, string _args)
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("abi", _abi);
         form.AddField("method", _method);
         form.AddField("args", _args);
@@ -326,7 +327,7 @@ public static async Task<List<MintedNFT.Response>> GetMintedNFT(string _chain, s
     public static async Task<string> AllErc721(string _chain, string _network, string _account, string _contract = "", int _first = 500, int _skip = 0)
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("account", _account);
@@ -346,7 +347,7 @@ public static async Task<List<MintedNFT.Response>> GetMintedNFT(string _chain, s
     public static async Task<string> AllErc1155(string _chain, string _network, string _account, string _contract = "", int _first = 500, int _skip = 0)
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("account", _account);
@@ -365,7 +366,7 @@ public static async Task<List<MintedNFT.Response>> GetMintedNFT(string _chain, s
     public static async Task<string> GasPrice(string _chain, string _network, string _rpc = "")
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("rpc", _rpc);
@@ -381,7 +382,7 @@ public static async Task<List<MintedNFT.Response>> GetMintedNFT(string _chain, s
     public static async Task<string> GasLimit(string _chain, string _network, string _to, string _value, string _data, string _rpc = "")
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("to", _to);
@@ -400,7 +401,7 @@ public static async Task<List<MintedNFT.Response>> GetMintedNFT(string _chain, s
     public static async Task<string> ChainId(string _chain, string _network, string _rpc = "")
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("rpc", _rpc);
@@ -416,7 +417,7 @@ public static async Task<List<MintedNFT.Response>> GetMintedNFT(string _chain, s
     public static async Task<string> CreateTransaction(string _chain, string _network, string _account, string _to, string _value, string _data, string _gasPrice = "", string _gasLimit = "", string _rpc = "")
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("account", _account);
@@ -438,7 +439,7 @@ public static async Task<List<MintedNFT.Response>> GetMintedNFT(string _chain, s
     public static async Task<string> BroadcastTransaction(string _chain, string _network, string _account, string _to, string _value, string _data, string _signature, string _gasPrice, string _gasLimit, string _rpc)
     {
         WWWForm form = new WWWForm();
-        form.AddField("projectId", "d645f60f-5285-4065-8b57-8c0930574d18");
+        form.AddField("projectId", ChickenConfig.ProjectID);
         form.AddField("chain", _chain);
         form.AddField("network", _network);
         form.AddField("account", _account);
