@@ -16,8 +16,8 @@ public class AllErc1155Example : MonoBehaviour
     async void Start()
     {
         string chain = "ethereum";
-        string network = "goerli"; // mainnet ropsten kovan rinkeby goerli
-        string account = "0xE3FB9BeB1a4723401CEB1Fd2417c9e4681D07066";
+        string network = "goerli"; // mainnet goerli
+        string account = "0xebc0e6232fb9d494060acf580105108444f7c696";
         string contract = "";
         int first = 500;
         int skip = 0;
