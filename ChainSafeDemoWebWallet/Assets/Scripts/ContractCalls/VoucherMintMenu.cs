@@ -5,6 +5,8 @@ using Models;
 using UnityEditor;
 using UnityEngine.UI; // needed when accessing text elements
 using UnityEngine;
+using Web3Unity.Scripts.Library.ETHEREUEM.Connect;
+using Web3Unity.Scripts.Library.Web3Wallet;
 
 public class VoucherMintMenu : MonoBehaviour
 {
@@ -45,6 +47,7 @@ public class VoucherMintMenu : MonoBehaviour
         print("Response: " + response);
         SpeedClouds.SetActive(true);
         Player.GetComponent<PlayerController>().speed = 35;
+        SuccessPopup.SetActive(true);
         responseText.text = "NFT Minted!";
     }
 }

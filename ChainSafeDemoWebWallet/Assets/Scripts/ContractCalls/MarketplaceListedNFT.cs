@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using Web3Unity.Scripts.Library.ETHEREUEM.Connect;
+using Web3Unity.Scripts.Library.Web3Wallet;
 
 public class MarketplaceListedNFT : MonoBehaviour
 {

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI; // needed when accessing text elements
 using UnityEngine;
+using Web3Unity.Scripts.Library.Web3Wallet;
 
 public class SignMenu : MonoBehaviour
 {

@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+using Web3Unity.Scripts.Library.Ethers.Contracts;
 using Newtonsoft.Json;
 using UnityEngine.UI; // needed when accessing text elements
 using UnityEngine;
+using Web3Unity.Scripts.Library.Ethers.Providers;
+using Web3Unity.Scripts.Library.Web3Wallet;
 
 public class ContractMenu : MonoBehaviour
 {
@@ -11,11 +12,9 @@ public class ContractMenu : MonoBehaviour
     // set network mainnet, testnet
     public string network = "goerli";
     // abi in json format
-    public string abi = "[ { \"inputs\": [ { \"internalType\": \"uint8\", \"name\": \"_myArg\", \"type\": \"uint8\" } ], \"name\": \"addTotal\", \"outputs\": [], \"stateMutability\": \"nonpayable\", \"type\": \"function\" }, { \"inputs\": [], \"name\": \"myTotal\", \"outputs\": [ { \"internalType\": \"uint256\", \"name\": \"\", \"type\": \"uint256\" } ], \"stateMutability\": \"view\", \"type\": \"function\" } ]";
+    public string contractAbi = "[ { \"inputs\": [ { \"internalType\": \"uint8\", \"name\": \"_myArg\", \"type\": \"uint8\" } ], \"name\": \"addTotal\", \"outputs\": [], \"stateMutability\": \"nonpayable\", \"type\": \"function\" }, { \"inputs\": [], \"name\": \"myTotal\", \"outputs\": [ { \"internalType\": \"uint256\", \"name\": \"\", \"type\": \"uint256\" } ], \"stateMutability\": \"view\", \"type\": \"function\" } ]";
     // address of contract
-    public string contract = "0x741C3F3146304Aaf5200317cbEc0265aB728FE07";
-    // testnet rpc from chainlist.org
-    string rpc = "https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161";
+    public string contractAddress = "0x741C3F3146304Aaf5200317cbEc0265aB728FE07";
     public GameObject SuccessPopup;
     public Text responseText;
 
@@ -36,13 +35,20 @@ public class ContractMenu : MonoBehaviour
     async public void CheckVariable()
     {
         string method = "myTotal";
-        // array of arguments for contract
-        string args = "[]";
-        // connects to user's browser wallet to call a transaction
-        string response = await EVM.Call(chain, network, contract, abi, method, args, rpc);
+        // you can use this to create a provider for hardcoding and parse this instead of rpc get instance
+        //var provider = new JsonRpcProvider(PlayerPrefs.GetString("RPC"));
+        var contract = new Contract(contractAbi, contractAddress, RPC.GetInstance.Provider());
+        Debug.Log("Contract: " + contract);
+        var calldata = await contract.Call(method, new object[]
+        {
+            // if you need to add parameters you can do so, a call with no args is blank
+            // arg1,
+            // arg2
+        });
+        Debug.Log("Contract Data: " + calldata[0]);
         // display response in game
-        print("Contract Variable Total: " + response);
-        responseText.text = "Contract Variable Total: " + response;
+        print("Contract Variable Total: " + calldata[0]);
+        responseText.text = "Contract Variable Total: " + calldata[0];
         SuccessPopup.SetActive(true);
     }
 
@@ -51,13 +57,16 @@ public class ContractMenu : MonoBehaviour
         string method = "addTotal";
         string amount = "1";
         string chainId = "5"; // goerli
-        // array of arguments for contract
-        string[] obj = {amount};
-        string args = JsonConvert.SerializeObject(obj);
-        // connects to user's browser wallet to call a transaction
-        string data = await EVM.CreateContractData(abi, method, args);
+        var contract = new Contract(contractAbi, contractAddress);
+        Debug.Log("Contract: " + contract);
+        var calldata = contract.Calldata(method, new object[]
+        {
+            // values need to be converted to integers currently for webwallet builds
+            int.Parse(amount)
+        });
+        Debug.Log("Contract Data: " + calldata);
         // send transaction
-        string response = await Web3Wallet.SendTransaction(chainId, contract, "0", data, "", "");
+        string response = await Web3Wallet.SendTransaction(chainId, contractAddress, "0", calldata, "", "");
         // display response in game
         print("Please check the contract variable again in a few seconds once the chain has processed the request!");
         responseText.text = "Contract Variable Total: " + response;
