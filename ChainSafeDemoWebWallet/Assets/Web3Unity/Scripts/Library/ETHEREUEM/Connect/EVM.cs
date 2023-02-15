@@ -4,6 +4,7 @@ using Models;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
+using Web3Unity.Scripts.Library.Ethers.Contracts;
 using ChickenConfig = ChickenDemoConfig.Config;
 
 namespace Web3Unity.Scripts.Library.ETHEREUEM.Connect
@@ -201,6 +202,46 @@ namespace Web3Unity.Scripts.Library.ETHEREUEM.Connect
                 return data.response;
             }
         }
+
+
+        public static async Task<string> AllErc721(string _chain, string _network, string _account, string _contract = "", int _first = 500, int _skip = 0)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("projectId", ChickenConfig.ProjectID);
+            form.AddField("chain", _chain);
+            form.AddField("network", _network);
+            form.AddField("account", _account);
+            form.AddField("contract", _contract);
+            form.AddField("first", _first);
+            form.AddField("skip", _skip);
+
+            string url = host + "/all721";
+            using (UnityWebRequest webRequest = UnityWebRequest.Post(url, form))
+            {
+                await webRequest.SendWebRequest();
+                Response<string> data = JsonUtility.FromJson<Response<string>>(System.Text.Encoding.UTF8.GetString(webRequest.downloadHandler.data));
+                return data.response;
+            }
+        }
+
+        public static async Task<string> AllErc1155(string _chain, string _network, string _account, string _contract = "", int _first = 500, int _skip = 0)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("projectId", ChickenConfig.ProjectID);
+            form.AddField("chain", _chain);
+            form.AddField("network", _network);
+            form.AddField("account", _account);
+            form.AddField("contract", _contract);
+            form.AddField("first", _first);
+            form.AddField("skip", _skip);
+            string url = host + "/all1155";
+            using (UnityWebRequest webRequest = UnityWebRequest.Post(url, form))
+            {
+                await webRequest.SendWebRequest();
+                Response<string> data = JsonUtility.FromJson<Response<string>>(System.Text.Encoding.UTF8.GetString(webRequest.downloadHandler.data));
+                return data.response;
+            }
+        }
         public static async Task<RedeemVoucherTxModel.Response> CreateRedeemTransaction(string _chain, string _network, string _voucher, string _type, string _nftAddress, string _account)
         {
             WWWForm form = new WWWForm();
@@ -221,3 +262,4 @@ namespace Web3Unity.Scripts.Library.ETHEREUEM.Connect
         }
     }
 }
+
