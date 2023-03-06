@@ -8,9 +8,16 @@ using Web3Unity.Scripts.Library.Web3Wallet;
 
 public class WalletLogin : MonoBehaviour
 {
-    public Toggle rememberMe;
+    ProjectConfigScriptableObject projectConfigSO = null;
     private void Start()
     {
+        // loads the data saved from the editor config
+        projectConfigSO = (ProjectConfigScriptableObject)Resources.Load("ProjectConfigData", typeof(ScriptableObject));
+        PlayerPrefs.SetString("ProjectID", projectConfigSO.ProjectID);
+        PlayerPrefs.SetString("ChainID", projectConfigSO.ChainID);
+        PlayerPrefs.SetString("Chain", projectConfigSO.Chain);
+        PlayerPrefs.SetString("Network", projectConfigSO.Network);
+        PlayerPrefs.SetString("RPC", projectConfigSO.RPC);
         // if remember me is checked, set the account to the saved account
         if (PlayerPrefs.HasKey("RememberMe") && PlayerPrefs.HasKey("Account"))
             if (PlayerPrefs.GetInt("RememberMe") == 1 && PlayerPrefs.GetString("Account") != "")
@@ -35,10 +42,6 @@ public class WalletLogin : MonoBehaviour
         {
             // save account
             PlayerPrefs.SetString("Account", account);
-            if (rememberMe.isOn)
-                PlayerPrefs.SetInt("RememberMe", 1);
-            else
-                PlayerPrefs.SetInt("RememberMe", 0);
             print("Account: " + account);
             // load next scene
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
